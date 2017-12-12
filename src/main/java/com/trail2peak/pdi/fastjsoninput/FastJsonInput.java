@@ -150,14 +150,17 @@ public class FastJsonInput extends BaseStep implements StepInterface {
 				}
 				
 				meta.getFields(data.outputRowMeta, getStepname(), null, null,
-						this, repository, metaStore);
+						this);
 
 
 
 				// Create convert meta-data objects that will contain Date &
 				// Number formatters
 				data.convertRowMeta = data.outputRowMeta
-						.cloneToType(ValueMetaInterface.TYPE_STRING);
+						//.cloneToType(ValueMetaInterface.TYPE_STRING);
+						.clone();
+				for (int i=0;i<data.convertRowMeta.size();i++) data.convertRowMeta.getValueMeta(i).setType(ValueMetaInterface.TYPE_STRING);
+
 
 			}
 
@@ -379,13 +382,14 @@ public class FastJsonInput extends BaseStep implements StepInterface {
 			// Create the output row meta-data
 			data.outputRowMeta = new RowMeta();
 
-			meta.getFields(data.outputRowMeta, getStepname(), null, null, this,
-					repository, metaStore);
+			meta.getFields(data.outputRowMeta, getStepname(), null, null, this);
 
 			// Create convert meta-data objects that will contain Date & Number
 			// formatters
 			data.convertRowMeta = data.outputRowMeta
-					.cloneToType(ValueMetaInterface.TYPE_STRING);
+					//.cloneToType(ValueMetaInterface.TYPE_STRING);
+			.clone();
+			for (int i=0;i<data.convertRowMeta.size();i++) data.convertRowMeta.getValueMeta(i).setType(ValueMetaInterface.TYPE_STRING);
 		}
 		Object[] r = null;
 		try {

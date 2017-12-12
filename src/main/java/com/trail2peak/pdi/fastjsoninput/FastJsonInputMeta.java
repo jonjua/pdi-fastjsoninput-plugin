@@ -8,6 +8,7 @@ import org.apache.commons.vfs.FileObject;
 import org.pentaho.di.core.CheckResult;
 import org.pentaho.di.core.CheckResultInterface;
 import org.pentaho.di.core.Const;
+import org.pentaho.di.core.Counter;
 import org.pentaho.di.core.database.DatabaseMeta;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.exception.KettleStepException;
@@ -16,7 +17,6 @@ import org.pentaho.di.core.fileinput.FileInputList;
 import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.row.ValueMeta;
 import org.pentaho.di.core.row.ValueMetaInterface;
-import org.pentaho.di.core.row.value.ValueMetaFactory;
 import org.pentaho.di.core.variables.VariableSpace;
 import org.pentaho.di.core.xml.XMLHandler;
 import org.pentaho.di.i18n.BaseMessages;
@@ -31,7 +31,6 @@ import org.pentaho.di.trans.step.StepDataInterface;
 import org.pentaho.di.trans.step.StepInterface;
 import org.pentaho.di.trans.step.StepMeta;
 import org.pentaho.di.trans.step.StepMetaInterface;
-import org.pentaho.metastore.api.IMetaStore;
 import org.w3c.dom.Node;
 
 /**
@@ -541,7 +540,7 @@ public class FastJsonInputMeta extends BaseStepMeta implements
 	}
 
 	public void loadXML(Node stepnode, List<DatabaseMeta> databases,
-			IMetaStore metaStore) throws KettleXMLException {
+						Map<String, Counter> metaStore) throws KettleXMLException {
 		readData(stepnode);
 	}
 
@@ -829,8 +828,7 @@ public class FastJsonInputMeta extends BaseStepMeta implements
 	}
 
 	public void getFields(RowMetaInterface r, String name,
-			RowMetaInterface[] info, StepMeta nextStep, VariableSpace space,
-			Repository repository, IMetaStore metaStore)
+			RowMetaInterface[] info, StepMeta nextStep, VariableSpace space)
 			throws KettleStepException {
 		int i;
 		for (i = 0; i < inputFields.length; i++) {
@@ -841,8 +839,9 @@ public class FastJsonInputMeta extends BaseStepMeta implements
 				type = ValueMeta.TYPE_STRING;
 			}
 			try {
-				ValueMetaInterface v = ValueMetaFactory.createValueMeta(
-						space.environmentSubstitute(field.getName()), type);
+				/*ValueMetaInterface v = ValueMetaFactory.createValueMeta(
+						space.environmentSubstitute(field.getName()), type);*/
+				ValueMetaInterface v = new ValueMeta(field.getName(),type);
 				v.setLength(field.getLength());
 				v.setPrecision(field.getPrecision());
 				v.setOrigin(name);
@@ -944,8 +943,8 @@ public class FastJsonInputMeta extends BaseStepMeta implements
 		}
 	}
 
-	public void readRep(Repository rep, IMetaStore metaStore, ObjectId id_step,
-			List<DatabaseMeta> databases) throws KettleException {
+	public void readRep(Repository rep, ObjectId id_step,
+			List<DatabaseMeta> databases, Map<String, Counter>  metaStore) throws KettleException {
 
 		try {
 			includeFilename = rep.getStepAttributeBoolean(id_step, "include");
@@ -1043,7 +1042,7 @@ public class FastJsonInputMeta extends BaseStepMeta implements
 		}
 	}
 
-	public void saveRep(Repository rep, IMetaStore metaStore,
+	public void saveRep(Repository rep,
 			ObjectId id_transformation, ObjectId id_step)
 			throws KettleException {
 		try {
@@ -1158,8 +1157,7 @@ public class FastJsonInputMeta extends BaseStepMeta implements
 
 	public void check(List<CheckResultInterface> remarks, TransMeta transMeta,
 			StepMeta stepMeta, RowMetaInterface prev, String[] input,
-			String[] output, RowMetaInterface info, VariableSpace space,
-			Repository repository, IMetaStore metaStore) {
+			String[] output, RowMetaInterface info) {
 		CheckResult cr;
 
 		if (!isInFields()) {
@@ -1251,7 +1249,6 @@ public class FastJsonInputMeta extends BaseStepMeta implements
 	 * @param repository
 	 *            The repository to optionally load other resources from (to be
 	 *            converted to XML)
-	 * @param metaStore
 	 *            the metaStore in which non-kettle metadata could reside.
 	 *
 	 * @return the filename of the exported resource
@@ -1259,7 +1256,7 @@ public class FastJsonInputMeta extends BaseStepMeta implements
 	public String exportResources(VariableSpace space,
 			Map<String, ResourceDefinition> definitions,
 			ResourceNamingInterface resourceNamingInterface,
-			Repository repository, IMetaStore metaStore) throws KettleException {
+			Repository repository) throws KettleException {
 		try {
 			// The object that we're modifying here is a copy of the original!
 			// So let's change the filename from relative to absolute by

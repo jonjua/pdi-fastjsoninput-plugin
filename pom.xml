@@ -23,8 +23,8 @@
 
 	<repositories>
 		<repository>
-			<id>pentaho-repo</id>
-			<url>http://repo.pentaho.org/artifactory/repo</url>
+			<id>pentaho</id>
+			<url>http://nexus.pentaho.org/content/groups/omni</url>
 		</repository>
 	</repositories>
 
@@ -38,19 +38,19 @@
 		<dependency>
 			<groupId>pentaho-kettle</groupId>
 			<artifactId>kettle-core</artifactId>
-			<version>5.0.9</version>
+			<version>4.4.0-stable</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>pentaho-kettle</groupId>
 			<artifactId>kettle-engine</artifactId>
-			<version>5.0.9</version>
+			<version>4.4.0-stable</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>pentaho-kettle</groupId>
 			<artifactId>kettle-ui-swt</artifactId>
-			<version>5.0.9</version>
+			<version>4.4.0-stable</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -88,6 +88,37 @@
 			<artifactId>asm</artifactId>
 			<version>1.0.2</version>
 		</dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+		<dependency>
+			<groupId>commons-vfs</groupId>
+			<artifactId>commons-vfs</artifactId>
+			<version>20100924-pentaho</version>
+		</dependency>
+        <dependency>
+            <groupId>pentaho-kettle</groupId>
+			<artifactId>kettle-db</artifactId>
+			<version>4.4.0-stable</version>
+        </dependency>
+        <dependency>
+			<groupId>org.eclipse.swt</groupId>
+			<artifactId>swt-linux-x86_64</artifactId>
+			<version>3.7</version>
+		</dependency>
+        <dependency>
+            <groupId>net.sf.scannotation</groupId>
+            <artifactId>scannotation</artifactId>
+            <version>1.0.2</version>
+        </dependency>
 
 	</dependencies>
 

@@ -1053,10 +1053,10 @@ public class FastJsonInputDialog extends BaseStepDialog implements
 		// Add the file to the list of files...
 		SelectionAdapter selA = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent arg0) {
-				wFilenameList.add(new String[] { wFilename.getText(),
-						wFilemask.getText(), wExcludeFilemask.getText(),
-						FastJsonInputMeta.RequiredFilesCode[0],
-						FastJsonInputMeta.RequiredFilesCode[0] });
+				wFilenameList.add(wFilename.getText(),
+                        wFilemask.getText(), wExcludeFilemask.getText(),
+                        FastJsonInputMeta.RequiredFilesCode[0],
+                        FastJsonInputMeta.RequiredFilesCode[0]);
 				wFilename.setText("");
 				wFilemask.setText("");
 				wExcludeFilemask.setText("");
@@ -1325,13 +1325,12 @@ public class FastJsonInputDialog extends BaseStepDialog implements
 
 			for (int i = 0; i < in.getFileName().length; i++) {
 				wFilenameList
-						.add(new String[] {
-								in.getFileName()[i],
-								in.getFileMask()[i],
-								in.getExludeFileMask()[i],
-								in.getRequiredFilesDesc(in.getFileRequired()[i]),
-								in.getRequiredFilesDesc(in
-										.getIncludeSubFolders()[i]) });
+						.add(in.getFileName()[i],
+                                in.getFileMask()[i],
+                                in.getExludeFileMask()[i],
+                                in.getRequiredFilesDesc(in.getFileRequired()[i]),
+                                in.getRequiredFilesDesc(in
+                                        .getIncludeSubFolders()[i]));
 			}
 
 			wFilenameList.removeEmptyRows();
